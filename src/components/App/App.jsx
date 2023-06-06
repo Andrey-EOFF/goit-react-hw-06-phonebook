@@ -1,23 +1,22 @@
-import { useEffect, useState } from 'react';
-import { nanoid } from 'nanoid';
-import PropTypes from 'prop-types';
+import React, { useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { saveContact, deleteContact, updateFilter } from '../../redux/reducers';
+import { Title, SubTitle, Container } from './App.styled';
 import ContactList from 'components/ContactList/ContactList';
 import ContactForm from 'components/ContactForm/ContactForm';
 import Filter from 'components/Filter/Filter';
-import { Title, SubTitle, Container } from './App.styled';
 
 const App = () => {
-  const [contacts, setContacts] = useState(() => {
-    return JSON.parse(window.localStorage.getItem('contacts')) ?? [];
-  });
-  const [filter, setFilter] = useState('');
+  const dispatch = useDispatch();
+  const contacts = useSelector(state => state.contacts);
+  const filter = useSelector(state => state.filter);
 
   useEffect(() => {
-    window.localStorage.setItem('contacts', JSON.stringify(contacts));
+    localStorage.setItem('contacts', JSON.stringify(contacts));
   }, [contacts]);
 
   const addContact = newContact => {
-    const { name, number } = newContact;
+    const { name } = newContact;
     const isNameAlreadyExist = contacts.some(contact => contact.name === name);
 
     if (isNameAlreadyExist) {
@@ -25,23 +24,15 @@ const App = () => {
       return;
     }
 
-    const contactToAdd = {
-      id: nanoid(),
-      name,
-      number,
-    };
-
-    setContacts(prevContacts => [...prevContacts, contactToAdd]);
+    dispatch(saveContact(newContact));
   };
 
-  const deleteContact = contactId => {
-    setContacts(prevContacts =>
-      prevContacts.filter(contact => contact.id !== contactId)
-    );
+  const deleteContactById = contactId => {
+    dispatch(deleteContact(contactId));
   };
 
-  const changeFilter = e => {
-    setFilter(e.currentTarget.value);
+  const handleFilterChange = e => {
+    dispatch(updateFilter(e.target.value));
   };
 
   const visibleContacts = contacts.filter(contact =>
@@ -52,21 +43,14 @@ const App = () => {
     <Container>
       <Title>Phonebook</Title>
       <ContactForm onSubmit={addContact} />
-      <Filter value={filter} onChange={changeFilter} />
+      <Filter value={filter} onChange={handleFilterChange} />
       <SubTitle>Contacts</SubTitle>
-      <ContactList contacts={visibleContacts} onDeleteContact={deleteContact} />
+      <ContactList
+        contacts={visibleContacts}
+        onDeleteContact={deleteContactById}
+      />
     </Container>
   );
-};
-
-App.propTypes = {
-  contacts: PropTypes.arrayOf(
-    PropTypes.shape({
-      id: PropTypes.string.isRequired,
-      name: PropTypes.string.isRequired,
-      number: PropTypes.string.isRequired,
-    })
-  ),
 };
 
 export default App;
