@@ -7,7 +7,7 @@ import {
   StyledName,
   StyledNumber,
 } from './ContactList.styled';
-import { deleteContact } from '../../redux/reducers';
+import { deleteContact } from 'redux/contactsSlice';
 
 const ContactList = ({ onDeleteContact }) => {
   const dispatch = useDispatch();

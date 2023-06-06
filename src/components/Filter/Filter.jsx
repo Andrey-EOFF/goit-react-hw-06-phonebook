@@ -2,7 +2,7 @@ import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import PropTypes from 'prop-types';
 import { FilterContainer, FilterInput } from './Filter.styled';
-import { updateFilter } from '../../redux/reducers';
+import { updateFilter } from 'redux/contactsSlice';
 
 const Filter = () => {
   const dispatch = useDispatch();
@@ -16,11 +16,7 @@ const Filter = () => {
   return (
     <FilterContainer htmlFor="">
       Find contacts by name
-      <FilterInput
-        type="text"
-        value={filter}
-        onChange={handleChange}
-      />
+      <FilterInput type="text" value={filter} onChange={handleChange} />
     </FilterContainer>
   );
 };
