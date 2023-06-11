@@ -29,3 +29,9 @@ export const { saveContact, deleteContact, updateFilter } =
   contactsSlice.actions;
 
 export default contactsSlice.reducer;
+
+
+// SELECTORS !!!!!!!!!!!!!!!!!!!!!!!!!!
+
+export const selectContacts = state => state.contacts;
+export const selectFilter = state => state.filter;

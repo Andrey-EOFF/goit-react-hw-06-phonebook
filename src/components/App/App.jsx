@@ -1,6 +1,12 @@
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { saveContact, deleteContact, updateFilter } from 'redux/contactsSlice';
+import {
+  saveContact,
+  deleteContact,
+  updateFilter,
+  selectContacts,
+  selectFilter,
+} from 'redux/contactsSlice';
 import { Title, SubTitle, Container } from './App.styled';
 import ContactList from 'components/ContactList/ContactList';
 import ContactForm from 'components/ContactForm/ContactForm';
@@ -8,8 +14,8 @@ import Filter from 'components/Filter/Filter';
 
 const App = () => {
   const dispatch = useDispatch();
-  const contacts = useSelector(state => state.contacts);
-  const filter = useSelector(state => state.filter);
+  const contacts = useSelector(selectContacts);
+  const filter = useSelector(selectFilter);
 
   useEffect(() => {
     localStorage.setItem('contacts', JSON.stringify(contacts));
