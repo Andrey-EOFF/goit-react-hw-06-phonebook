@@ -40,7 +40,7 @@ const App = () => {
   };
 
   const handleFilterChange = e => {
-    dispatch(updateFilter(e.target.value));
+    dispatch(updateFilter(e.currentTarget.value));
   };
 
   const visibleContacts = contacts.filter(contact =>

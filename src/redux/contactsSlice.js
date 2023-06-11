@@ -23,13 +23,10 @@ const contactsSlice = createSlice({
   },
 });
 
-
-
 export const { saveContact, deleteContact, updateFilter } =
   contactsSlice.actions;
 
 export default contactsSlice.reducer;
-
 
 // SELECTORS !!!!!!!!!!!!!!!!!!!!!!!!!!
 
