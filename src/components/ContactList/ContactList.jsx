@@ -1,6 +1,5 @@
 import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import PropTypes from 'prop-types';
 import {
   StyledContactList,
   StyledContactItem,
@@ -36,8 +35,5 @@ const ContactList = ({ onDeleteContact }) => {
   );
 };
 
-ContactList.propTypes = {
-  onDeleteContact: PropTypes.func.isRequired,
-};
 
 export default ContactList;
