@@ -8,19 +8,25 @@ import {
   StyledNumber,
 } from './ContactList.styled';
 import { deleteContact } from 'redux/contactsSlice';
+import { selectContacts, selectFilter } from 'redux/contactsSlice';
 
 const ContactList = ({ onDeleteContact }) => {
   const dispatch = useDispatch();
-  const contacts = useSelector(state => state.contacts);
+  const contacts = useSelector(selectContacts);
+  const filter = useSelector(selectFilter);
 
   const handleDeleteContact = contactId => {
     dispatch(deleteContact(contactId));
     onDeleteContact(contactId);
   };
 
+  const filteredContacts = contacts.filter(contact =>
+    contact.name.toLowerCase().includes(filter.toLowerCase())
+  );
+
   return (
     <StyledContactList>
-      {contacts.map(({ id, name, number }) => (
+      {filteredContacts.map(({ id, name, number }) => (
         <StyledContactItem key={id}>
           <StyledName>{name}</StyledName> <StyledNumber>{number}</StyledNumber>
           <button onClick={() => handleDeleteContact(id)}>Delete</button>
